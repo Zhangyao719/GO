@@ -55,4 +55,48 @@ func main() {
 4. \\" : 一个"
 5. \r : 一个回车，不是换行，会将后面的内容重新写在行首进行覆盖。
 
-## 
+## DOS操作指令
+
+> DOS: Disk Operating System 磁盘操作系统
+
+- **目录操作**
+
+1. `dir`: 查看目录
+2. `md`: 创建文件夹 （多个目录 依次往后写）
+3. `rd `: 删除空目录（`/q/s` 无需询问，删除目录下所有文件，`/s` 删除时 出现是否删除提示）
+4. `cd /d f:` : 切换到F盘
+5. `cd d:\demo` : 切换到D盘demo目录下
+6. `cd \`: 返回根目录 
+
+- **文件操作**
+
+1. `echo`：输出字符串
+
+   ```powershell
+   # 将 "hello" 写入 D盘下的demo/test01/abc.txt文本
+   echo hello > d:\demo\test01\abc.txt
+   ```
+
+2. `copy`：复制文件
+
+   ```powershell
+   # 将 abc.txt 文件复制到 test02 目录下
+   copy abc.txt d:\demo\test02
+   copy abc.txt d:\demo\test02\重命名.txt
+   ```
+
+3. `move`：移动文件（剪切）
+
+   ```powershell、
+   # 将 abc.txt 文件 剪切到 D盘/demo文件夹下
+   move abc.txt d:\demo\
+   ```
+
+4. `del`： 删除文件
+
+   ```powershell
+   del abc.txt
+   del *.txt # 删除所有 .txt 文件
+   ```
+
+5. `exit`：退出cmd
