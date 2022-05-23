@@ -258,3 +258,60 @@ func main()  {
 - **UTF-8**
 
   **UTF-8 是 Unicode 的实现方式之一**。是针对Unicode的一种**可变长度**字符编码，**根据不同的符号而变化字节长度。**可以用来表示Unicode标准中的任何字符，而且其编码中的第一个字节仍与[ASCII](https://baike.baidu.com/item/ASCII/309296)相容，使得原来处理ASCII字符的软件无须或只进行少部分修改后，便可继续使用。
+
+### 字符串
+
+GO的字符串是由单个字节连接起来的（使用UTF-8编码标识的Unicode文本）。
+
+GO中的**字符串可以重新赋值，但不能修改**。
+
+ ```go
+func main() {
+	str := "字符串是不可变的"
+	str[0] = "呵呵" // error cannot assign to str[0] (value of type byte)
+	str = "哈哈" // success
+
+	fmt.Println(str)
+}
+ ```
+
+- 使用双引号"" : 有特殊字符 需要转义 
+- 使用反引号`` : 内容全部视为字符串
+
+```go
+func main() {
+	str1 := "我叫\"王多鱼\""
+    str2 := `
+    	庄强:"王多鱼是我哥们儿"
+    	王多鱼:"请你一定要加入我的团队 大聪明~！"
+    `
+	fmt.Println(str)
+}
+```
+
+- 超长字符串换行拼接（+号 在结尾）
+
+```go
+func main() {
+	str3 := "哈哈" + "呵呵"
+	str3 += "嘿嘿"
+    // 字符串的拼接(超长字符串注意 +号 在结尾)
+	str4 := "hello" + "world" + "hello" + "world" + "hello" + "world" +
+	"hello" + "world" + "hello" + "world" +
+	"hello" + "world"
+
+	fmt.Println(str3, str4)
+}
+```
+
+### 基本数据类型的默认值
+
+整数型：0
+
+浮点型：0
+
+字符串：""
+
+布尔值：false
+
+### 基本数据转换
