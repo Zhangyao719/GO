@@ -316,33 +316,123 @@ func main() {
 
 ### 基本数据转换
 
-- **数字转换**
+#### **数字转换**
 
-  高精度在向低精度转换时，如果高精度超出低精度范围，编译并不会报错，而会做溢出处理。
+高精度在向低精度转换时，如果高精度超出低精度范围，编译并不会报错，而会做溢出处理。
 
-  ```go
-  package main
-  import "fmt"
-  func main() {
-  	var i int32 = 100
-  	// * 类型转换
-  	var n1 float32 = float32(i)
-  	var n2 int8 = int8(i)
-  	var n3 uint64 = uint64(i)
-  
-  	fmt.Printf("n1: %T %v \n n2: %T %v \n n3: %T %v \n", n1, n1, n2, n2, n3, n3)
-  
-  	// * 在转换中，如果 高精度 超出 低精度 范围，编译并不会报错，而会做溢出处理。
-  	// * 比如 uint64 999 转成 uint8 (999 超出了 0-255 范围)
-  	var n4 uint64 = 999
-  	var n5 uint8 = uint8(n4)
-  	fmt.Println("n5 \n", n5) // 231
-  	
-  	var n6 int32 = 300
-  	var n7 int8 = int8(n6) + 127 // success 编译通过 溢出处理
-  	// var n8 int8 = int8(n6) + 128 // error 128本身已超出 int8 范围
-  	fmt.Println("n7", n7) // -85
-  }
-  ```
+```go
+package main
+import "fmt"
+func main() {
+	var i int32 = 100
+	// * 类型转换
+	var n1 float32 = float32(i)
+	var n2 int8 = int8(i)
+	var n3 uint64 = uint64(i)
 
-- **转字符串**
+	fmt.Printf("n1: %T %v \n n2: %T %v \n n3: %T %v \n", n1, n1, n2, n2, n3, n3)
+
+	// * 在转换中，如果 高精度 超出 低精度 范围，编译并不会报错，而会做溢出处理。
+	// * 比如 uint64 999 转成 uint8 (999 超出了 0-255 范围)
+	var n4 uint64 = 999
+	var n5 uint8 = uint8(n4)
+	fmt.Println("n5 \n", n5) // 231
+	
+	var n6 int32 = 300
+	var n7 int8 = int8(n6) + 127 // success 编译通过 溢出处理
+	// var n8 int8 = int8(n6) + 128 // error 128本身已超出 int8 范围
+	fmt.Println("n7", n7) // -85
+}
+```
+
+#### **基本类型转字符串**
+
+[Printf的占位符](https://studygolang.com/articles/2644)
+
+| 占位符 | 含义             |
+| ------ | ---------------- |
+| %d     | 十进制           |
+| %c     | 字符             |
+| %T     | 数据类型         |
+| %v     | 相应值的默认格式 |
+| %q     | 单引号包围       |
+| %t     | 布尔值           |
+| %f     | 浮点             |
+
+- 方式一：`fmt.Sprintf(format, value)`
+
+https://studygolang.com/static/pkgdoc/pkg/fmt.htm#Sprintf
+
+```go
+func main() {
+	n1 := 999
+	n2 := 23.456
+	b := true
+	var chart byte = 'h'
+	var str string
+
+	// * 方式一：fmt.Sprintf
+	// * 参数一： 格式，参数二：数值
+	str = fmt.Sprintf("%d", n1) // %d 十进制
+	fmt.Printf("str的类型:%T, str的值:%q\n", str, str) // %q 单引号围绕的字符字面值
+
+	str = fmt.Sprintf("%f", n2) // %d 浮点
+	fmt.Printf("str的类型:%T, str的值:%q\n", str, str)
+
+	str = fmt.Sprintf("%t", b) // %t 布尔值
+	fmt.Printf("str的类型:%T, str的值:%q\n", str, str)
+
+	str = fmt.Sprintf("%c", chart) // %c 字符
+	fmt.Printf("str的类型:%T, str的值:%q\n", str, str)
+}
+```
+
+- 方式二：`strconv.Format`
+
+https://studygolang.com/static/pkgdoc/pkg/strconv.htm#FormatInt
+
+strconv.FormatInt(i int64, base int)
+
+```go
+// 参数一： int64类型数据 / 参数二：进制
+```
+
+strconv.FormatUint(i uint64, base int)
+
+```go
+// 参数一： uint64类型数据 / 参数二：进制
+```
+
+strconv.FormatFloat(f float64, fmt byte, prec, bitSize int)
+
+```go
+// 参数一： float64类型数据 / 参数二：格式 / 参数三：保留小数个数 / 参数四：浮点比特位
+```
+
+strconv.FormatBool(b bool)
+
+```go
+// 参数： 布尔值
+```
+
+```go
+func main() {
+	n1 := 999
+	n2 := 23.456
+	b := true
+	var chart byte = 'h'
+	var str string
+
+	// * 方式二： strconv.Format
+	str = strconv.FormatInt(int64(n1), 10)
+	fmt.Printf("str的类型:%T, str的值:%q\n", str, str)
+
+	str = strconv.FormatFloat(n2, 'f', 10, 64)
+	fmt.Printf("str的类型:%T, str的值:%q\n", str, str)
+
+	str = strconv.FormatBool(b)
+	fmt.Printf("str的类型:%T, str的值:%q\n", str, str)
+}
+```
+
+#### **字符串转基本类型**
