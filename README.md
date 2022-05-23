@@ -415,6 +415,12 @@ strconv.FormatBool(b bool)
 // 参数： 布尔值
 ```
 
+strconv.Itoa(int)
+
+```go
+// 参数：int类型数字
+```
+
 ```go
 func main() {
 	n1 := 999
@@ -423,7 +429,10 @@ func main() {
 	var chart byte = 'h'
 	var str string
 
-	// * 方式二： strconv.Format
+	// * 方式二： strconv
+    str = strconv.Itoa(n1)
+	fmt.Printf("str的类型:%T, str的值:%q\n", str, str)
+
 	str = strconv.FormatInt(int64(n1), 10)
 	fmt.Printf("str的类型:%T, str的值:%q\n", str, str)
 
@@ -436,3 +445,41 @@ func main() {
 ```
 
 #### **字符串转基本类型**
+
+[func ParseBool(str string) (value bool, err error)](https://studygolang.com/static/pkgdoc/pkg/strconv.htm#ParseBool)
+
+[func ParseInt(s string, base int, bitSize int) (i int64, err error)](https://studygolang.com/static/pkgdoc/pkg/strconv.htm#ParseInt)
+
+[func ParseUint(s string, base int, bitSize int) (n uint64, err error)](https://studygolang.com/static/pkgdoc/pkg/strconv.htm#ParseUint)
+
+[func ParseFloat(s string, bitSize int) (f float64, err error)](https://studygolang.com/static/pkgdoc/pkg/strconv.htm#ParseFloat)
+
+```go
+func main() {
+	b, n1, n2, n3 := "true", "-256", "256", "3.1415"
+	params1, _ := strconv.ParseBool(b)
+	params2, _ := strconv.ParseInt(n1, 10, 32)
+	params3, _ := strconv.ParseUint(n2, 10, 32)
+	params4, _ := strconv.ParseFloat(n3, 64)
+
+	fmt.Printf("params1 类型：%T 值：%v \n", params1, params1)
+	fmt.Printf("params2 类型：%T 值：%v \n", params2, params2)
+	fmt.Printf("params3 类型：%T 值：%v \n", params3, params3)
+	fmt.Printf("params4 类型：%T 值：%v \n", params4, params4)
+    // params1 类型：bool 值：true 
+	// params2 类型：int64 值：-256
+	// params3 类型：uint64 值：256
+	// params4 类型：float64 值：3.1415
+}
+```
+
+**注意**： 要确保string类型能转成有效的数据，否则将会转换成默认值
+
+```go
+// * 转换不成功 将变成默认值
+params5, _ := strconv.ParseBool("hello")
+params6, _ := strconv.ParseInt("hello", 10, 32)
+fmt.Printf("params5 类型：%T 值：%v \n", params5, params5) // bool: false
+fmt.Printf("params6 类型：%T 值：%v \n", params6, params6) // int64: 0
+```
+
