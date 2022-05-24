@@ -483,3 +483,41 @@ fmt.Printf("params5 类型：%T 值：%v \n", params5, params5) // bool: false
 fmt.Printf("params6 类型：%T 值：%v \n", params6, params6) // int64: 0
 ```
 
+### 指针
+
+**基本数据类型**，存储的就是该变量的值，也叫值类型。值类型包括：基本数据类型int系列、float系列、bool、string、数组、结构体struct。
+
+**指针类型**：指针变量**存储的是一个内存地址**，该地址指向的空间存储着真正的值。
+
+`&` ：获取变量的内存地址。比如：`&name`获取变量name的内存地址。
+
+```go
+var num int = 123
+
+fmt.Printf("%v", &num) // 0xc0000160b8
+```
+
+`*`：
+
+1. \* + 类型，表示指针类型。值类型都有对应的指针类型，比如：*int / *float32 / *uint /......
+2. \* + 变量，表示获取 该指针变量 所指向的值。比如：`*ptr` 获取 ptr 存储的内存地址所指向的值。
+
+```go
+var num int = 123
+
+// 声明 指针int类型 ptr，接收内存地址
+var ptr *int = &num
+
+fmt.Println(&num, ptr, *ptr) // 0xc0000160b8 0xc0000160b8 123
+```
+
+**注意**：指针类型 与其 所需保存的内存地址指向的值的类型要一致
+
+```go
+var num int = 123
+var ptr1 *int = &num // success
+var ptr2 *float32 = &num // error cannot use *int as *float32
+```
+
+
+
