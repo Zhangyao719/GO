@@ -519,5 +519,5 @@ var ptr1 *int = &num // success
 var ptr2 *float32 = &num // error cannot use *int as *float32
 ```
 
-
+**引用类型**：指针、slice切片、map、管道chan、interface都是引用类型。变量存储的是一个地址，这个地址对应的空间才真正的存储数据（值）。内存通常在堆上分配，当没有任何变量引用这个地址时，该地址对应的数据空间就成为一个垃圾，由GC来回收。
 
